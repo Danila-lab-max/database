@@ -1,0 +1,44 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Подробнее{% endblock %}
+{% block regist %}
+    {% if log == 'teacher' or log == 'student' %}
+        <h3>Hello, {{ name }}</h3>
+    {% endif %}
+    {% if log == '' %}
+        <div class="buttons">
+            <a href="{% url 'reg_teacher' %}">Регистрация как учитель</a><br>
+            <a href="{% url 'reg_student' %}">Регистрация как ученик</a><br>
+            <a href="{% url 'entrance' %}">Вход</a><br>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="detail_inf">
+        <h3>{{ text.title }}</h3>
+        <div class="text">
+            <p>{{ text.text }}</p>
+        </div>
+        <p>{{ text.id_creater.last_name_student }} {{ text.id_creater.first_name_student }}</p>
+        <p>{{ text.date }}</p>
+    </div>
+    <div class="created_comment">
+        {% if text.id_checking != '' %}
+            <p>{{ comment.comment }}</p>
+            <br>
+            <i>{{ comment.checking_text.id_checking }}</i>
+        {% endif %}
+    </div>
+    <div class="comment">
+        {% if log == 'teacher' and text.id_checking == ''%}
+               <form class="reg_teacher" method="post" action="{% url 'create_comment'%}">
+                   {% csrf_token %}
+                   <label>Comment</label>
+                   <textarea type="text" name="comment"></textarea>
+                   <input type="hidden" name="text" value="{{ text.id }}">
+
+                   <button type="submit" class="btn btn-primary">Submit</button>
+               </form>
+        {% endif %}
+    </div>
+{% endblock %}

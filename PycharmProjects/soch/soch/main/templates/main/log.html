@@ -1,0 +1,23 @@
+{% extends 'main/layout.html' %}
+
+{% block regist %}
+<div class="buttons">
+    <a href="{% url 'reg_teacher' %}">Регистрация как учитель</a><br>
+    <a href="{% url 'reg_student' %}">Регистрация как ученик</a><br>
+    <a href="{% url 'entrance' %}">Вход</a><br>
+</div>
+{% endblock %}
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+    <form class="reg_teacher" method="post">
+        {% csrf_token %}
+        <label>Email</label>
+        <input type="text" name="email">
+
+        <label>Password</label>
+        <input type="text" name="password">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {{ error }}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Главная{% endblock %}
+{% block regist %}
+    {% if log == 'teacher' or log == 'student' %}
+        <h3>Hello, {{ name }}</h3>
+    {% endif %}
+    {% if log == '' %}
+        <div class="buttons">
+            <a href="{% url 'reg_teacher' %}">Регистрация как учитель</a><br>
+            <a href="{% url 'reg_student' %}">Регистрация как ученик</a><br>
+            <a href="{% url 'entrance' %}">Вход</a><br>
+        </div>
+    {% endif %}
+{% endblock %}
+{% block content %}
+    {% if log == 'student'%}
+        <a href="{% url 'create_soch' %}" style="text-align: center; text-decoration: none;"><h3>Написать сочинение</h3></a>
+        <hr>
+    {% endif %}
+    {% for i in texts %}
+        <div class="short_inf">
+            <h3>{{ i.title }}</h3>
+            <p>{{ i.date }}</p>
+            <a href="{% url 'soch_detail' i.id %}">Подробнее</a>
+            {% if i.id_checking == '' %}
+                <p style="color: red">Не проверено</p>
+            {% endif %}
+            {% if i.id_checking != '' %}
+                <p style="color: green">Проверено</p>
+            {% endif %}
+            <hr>
+            <br>
+        </div>
+    {% endfor %}
+{% endblock %}
